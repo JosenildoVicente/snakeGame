@@ -1,5 +1,7 @@
 let canvas = document.getElementById("snake"); 
 let context = canvas.getContext("2d");
+let points_text = document.getElementById("point");
+let button_reset = document.getElementById("reset_button");
 let box = 32;
 let snake = [];
 snake[0] ={
@@ -29,6 +31,25 @@ function drawFood (){
     context.fillRect(food.x, food.y, box, box);
 }
 
+function score() {
+    points_text.textContent = "Points: " + (snake.length-1);
+}
+
+function reset(){
+    snake = [];
+    snake[0] ={
+        x: 8 * box,
+        y: 8 * box
+    }
+    direction = "right";
+    food ={
+        x: Math.floor(Math.random() * 15 + 1) * box,
+        y: Math.floor(Math.random() * 15 + 1) * box
+    }
+    clearInterval(jogo);
+    jogo = setInterval(iniciarJogo, 100);
+}
+
 document.addEventListener('keydown', update);
 
 function update(event){
@@ -55,6 +76,7 @@ function iniciarJogo(){
     criarBG();
     criarCobrinha();
     drawFood();
+    score();
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
